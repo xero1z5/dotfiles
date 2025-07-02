@@ -94,13 +94,15 @@ return {
         save_all_files = false,
         compile_directory = ".",
         compile_command = {
-            -- cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-g", "-Og", "-DDEBUG", "-I..", "$(FNAME)", "-o", "$(FNOEXT)"}}  -> When using debug header
-            cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-O2", "$(FNAME)", "-o", "$(FNOEXT)"}}
-
+            cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-g", "-Og", "-DDEBUG", "-I..", "$(FNAME)", "-o", "$(FNOEXT)"}}
+            -- cpp = {
+            --     exec = "g++",
+            --     args = { "-std=c++20", "-g", "-Og", "-Wall", "$(FNAME)", "-o", "$(FNOEXT) "}
+            -- },
         },
         running_directory = ".",
         run_command = {
-            cpp = { exec = "./$(FNOEXT)"}
+            cpp = { exec = "./$(FNOEXT)" },
         },
 
         multiple_testing = -1,
@@ -124,7 +126,11 @@ return {
         date_format = "%c",
 
         received_files_extension = "cpp",
-        received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
+        -- received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
+        received_problems_path = function(task, file_extension)
+            local name = task.name:gsub("%s+", "_") -- turn blanks into '_'
+            return string.format("%s/%s.%s", vim.fn.getcwd(), name, file_extension)
+        end,
         received_problems_prompt_path = true,
         received_contests_directory = "$(CWD)",
         received_contests_problems_path = "$(PROBLEM).$(FEXT)",
@@ -133,7 +139,6 @@ return {
         open_received_problems = true,
         open_received_contests = true,
         replace_received_testcases = false,
-
     },
 
     keys = {

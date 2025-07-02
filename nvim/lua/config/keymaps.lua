@@ -6,7 +6,6 @@
 local opts = { noremap = true, silent = true }
 local keymap = vim.keymap.set
 
-
 keymap("i", "jk", "<Esc>zz", opts)
 
 -- Ctrl+A: Select All
@@ -80,15 +79,26 @@ keymap("v", "<C-/>", "gc", { desc = "Toggle comment", remap = true })
 keymap("v", ">", ">gv", { desc = "Indent selection", silent = true })
 keymap("v", "<", "<gv", { desc = "Unindent selection", silent = true })
 
--- Compile file with debug flag 
---  Ctrl-Alt-b  →  save + compile, show one notification
 keymap("n", "<C-M-b>", function()
-  vim.notify("Compiling in debug mode")           -- ← message
-  vim.cmd("write")                                -- save buffer
-  vim.cmd("!g++ -std=c++20 -g -Og % -o debug")    -- run your command
+    vim.notify("Compiling in debug mode")
+    vim.cmd("write")
+    local file_path = vim.fn.expand("%:p") -- Full path
+    local file_dir = vim.fn.expand("%:p:h") -- Directory
+
+    -- Use vim.fn.shellescape() to properly quote the filename
+    local escaped_file = vim.fn.shellescape(file_path)
+    local output_path = vim.fn.shellescape(file_dir .. "/main")
+
+    local cmd = string.format("g++ -std=c++20 -g -Og %s -o %s", escaped_file, output_path)
+    local result = vim.fn.system(cmd)
+
+    if vim.v.shell_error == 0 then
+        vim.notify("Compilation successful!")
+    else
+        vim.notify("Compilation failed: " .. result, vim.log.levels.ERROR)
+    end
 end, { noremap = true, silent = true })
 
 -- Stay centered while moving
 -- keymap("n","jzz","j",{noremap = true, silent = true});
 -- keymap("n","kzz","k",{noremap = true, silent = true});
-

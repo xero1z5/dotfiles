@@ -94,17 +94,33 @@ return {
                 -- C/C++ Language Server
                 clangd = {
                     cmd = {
+                        -- "clangd",
+                        -- "--background-index",
+                        -- "--pch-storage=memory",
+                        -- "--clang-tidy",
+                        -- "--header-insertion=iwyu",
+                        -- "--completion-style=detailed",
+                        -- "--function-arg-placeholders",
+                        -- "--fallback-style=llvm",
+                        --
+                        -- using coding with sphere args
                         "clangd",
                         "--background-index",
-                        "--clang-tidy",
-                        "--header-insertion=iwyu",
-                        "--completion-style=detailed",
+                        "--pch-storage=memory",
+                        "--all-scopes-completion",
+                        "--pretty",
+                        "--header-insertion=never",
+                        "-j=4",
+                        "--inlay-hints",
+                        "--header-insertion-decorators",
                         "--function-arg-placeholders",
-                        "--fallback-style=llvm",
+                        "--completion-style=detailed",
                     },
                     init_options = {
                         usePlaceholders = true,
+                        fallbackFlags = { "-std=c++2a" },
                     },
+                    single_file_support = true,
                 },
 
                 -- Rust Language Server
