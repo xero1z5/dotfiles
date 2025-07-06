@@ -94,11 +94,11 @@ return {
         save_all_files = false,
         compile_directory = ".",
         compile_command = {
-            cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-g", "-Og", "-DDEBUG", "-I..", "$(FNAME)", "-o", "$(FNOEXT)"}}
-            -- cpp = {
-            --     exec = "g++",
-            --     args = { "-std=c++20", "-g", "-Og", "-Wall", "$(FNAME)", "-o", "$(FNOEXT) "}
-            -- },
+            -- cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-g", "-Og", "-DDEBUG", "-I..", "$(FNAME)", "-o", "$(FNOEXT)"}}
+            cpp = {
+                exec = "g++",
+                args = { "-std=c++20", "-g", "-Og", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
+            },
         },
         running_directory = ".",
         run_command = {
@@ -121,16 +121,21 @@ return {
         receive_print_message = true,
         start_receiving_persistently_on_setup = false,
 
-        template_file = false,
-        evaluate_template_modifiers = false,
+        template_file = {
+            cpp = "~/code/algo/template.cpp",
+        },
+        evaluate_template_modifiers = true,
         date_format = "%c",
 
         received_files_extension = "cpp",
         -- received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
+
         received_problems_path = function(task, file_extension)
-            local name = task.name:gsub("%s+", "_") -- turn blanks into '_'
+            -- remove leading/trailing spaces, then turn inner spaces into “_”
+            local name = vim.trim(task.name):gsub("%s+", "_") -- <-- changed line
             return string.format("%s/%s.%s", vim.fn.getcwd(), name, file_extension)
         end,
+
         received_problems_prompt_path = true,
         received_contests_directory = "$(CWD)",
         received_contests_problems_path = "$(PROBLEM).$(FEXT)",
