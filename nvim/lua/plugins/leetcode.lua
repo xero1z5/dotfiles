@@ -30,5 +30,6 @@ return {
         },
 
         picker = { provider = "snacks-picker" },
+        image_support = false,
     },
 }

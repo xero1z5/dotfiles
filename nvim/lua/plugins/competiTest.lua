@@ -121,10 +121,11 @@ return {
         receive_print_message = true,
         start_receiving_persistently_on_setup = false,
 
-        template_file = {
-            cpp = "~/code/algo/template.cpp",
-        },
-        evaluate_template_modifiers = true,
+        -- template_file = {
+        --     cpp = "~/code/algo/template.cpp",
+        -- },
+        template_file = false,
+        evaluate_template_modifiers = false,
         date_format = "%c",
 
         received_files_extension = "cpp",
