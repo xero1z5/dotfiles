@@ -41,6 +41,13 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ## 🔧 Troubleshooting & Error Fixes
 
+To enable swallow in kitty and ghostty, add this hyprland.conf
+misc {
+    enable_swallow = true
+    swallow_regex  = "^(kitty|ghostty|com\\.mitchellh\\.ghostty)$"
+}
+
+
 ### Kernel Panic on Boot 🧐
 
 **Symptom:** System panics at boot complaining about missing NVIDIA modules.  
