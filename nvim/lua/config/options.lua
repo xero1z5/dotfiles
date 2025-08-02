@@ -19,6 +19,8 @@ if vim.g.neovide then
     vim.g.neovide_floating_blur_amount_x = 0.0
     vim.g.neovide_floating_blur_amount_y = 0.0
     vim.g.neovide_remember_window_size = false
+    vim.opt.linespace = 2   -- try 1 or 2
+
 
     -- clear solid backgrounds so transparency shows through
     vim.cmd([[
