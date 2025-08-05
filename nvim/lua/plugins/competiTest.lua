@@ -94,10 +94,13 @@ return {
         save_all_files = false,
         compile_directory = ".",
         compile_command = {
-            -- cpp = { exec = "g++", args = { "-std=c++20", "-Wall", "-g", "-Og", "-DDEBUG", "-I..", "$(FNAME)", "-o", "$(FNOEXT)"}}
+            -- cpp = {
+            --     exec = "g++",
+            --     args = { "-std=c++20", "-g", "-Og", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
+            -- },
             cpp = {
                 exec = "g++",
-                args = { "-std=c++20", "-g", "-Og", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
+                args = { "-std=c++20", "-O2", "-pipe", "-march=native", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
             },
         },
         running_directory = ".",
@@ -129,12 +132,39 @@ return {
         date_format = "%c",
 
         received_files_extension = "cpp",
-        -- received_problems_path = "$(CWD)/$(PROBLEM).$(FEXT)",
+        -- received_problems_path = "$(CWD)/$(CONTEST)/$(PROBLEM).$(FEXT)",
 
-        received_problems_path = function(task, file_extension)
-            -- remove leading/trailing spaces, then turn inner spaces into “_”
-            local name = vim.trim(task.name):gsub("%s+", "_") -- <-- changed line
-            return string.format("%s/%s.%s", vim.fn.getcwd(), name, file_extension)
+        -- received_problems_path = function(task, file_extension)
+        --     -- remove leading/trailing spaces, then turn inner spaces into “_”
+        --     local name = vim.trim(task.name):gsub("%s+", "_") -- <-- changed line
+        --     return string.format("%s/%s.%s", vim.fn.getcwd(), name, file_extension)
+        -- end,
+
+        received_problems_path = function(task, ext)
+            local dir = vim.fn.getcwd()
+
+            -- grab contest-id and problem-letter directly from the URL
+            local patterns = {
+                "/problem/(%d+)/([A-Za-z])",
+                "/contest/(%d+)/problem/([A-Za-z])",
+                "/problemset/problem/(%d+)/([A-Za-z])",
+            }
+
+            -- test
+            local contest_id, problem_id
+            for _, pat in ipairs(patterns) do
+                contest_id, problem_id = task.url:match(pat)
+                if contest_id then
+                    break
+                end
+            end
+            contest_id = contest_id or "0"
+            problem_id = (problem_id or "X"):upper()
+
+            -- remove leading “A. ” / “B. ” etc. then turn spaces into “_”
+            local title = vim.trim(task.name):gsub("^%a%.%s+", ""):gsub("%s+", "_")
+
+            return string.format("%s/%s_%s_%s.%s", dir, contest_id, problem_id, title, ext)
         end,
 
         received_problems_prompt_path = true,
@@ -164,7 +194,12 @@ return {
         },
         {
             "<C-A-n>",
-            "<cmd>CompetiTest run<cr>",
+            function()
+                vim.cmd("normal! ggVG")
+                vim.cmd('normal! "+y')
+                vim.cmd("CompetiTest run")
+            end,
+            -- "<cmd>CompetiTest run<cr>",
             desc = "Run testcases",
             silent = true,
             noremap = true,

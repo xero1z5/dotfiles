@@ -33,9 +33,7 @@ keymap('n', '<C-l>', '<C-w>l', opts)
 --  Classic shortcuts (select-all, undo, redo, clipboard, etc.)
 ------------------------------------------------------------------------------
 -- Select All ---------------------------------------------------------------
-keymap('n', '<C-a>', 'ggVG',           { desc = 'Select all',   silent = true })
-keymap('i', '<C-a>', '<Esc>ggVG',      { desc = 'Select all',   silent = true })
-keymap('v', '<C-a>', '<Esc>ggVG',      { desc = 'Select all',   silent = true })
+keymap({ "n", "i", "v" }, "<C-a>","<Cmd>normal! ggVG<CR>",{ desc = "Select all", silent = true })
 
 -- Undo / Redo --------------------------------------------------------------
 keymap('n', '<C-z>', 'u',              { desc = 'Undo',         silent = true })
@@ -124,4 +122,14 @@ keymap('i', '<C-k>', '<Up>',    opts)   -- up
 keymap('i', '<C-l>', '<Right>', opts)   -- right
 keymap('i','<C-e>','<C-o>A',opts) -- move the end of the line
 
+
+-- <leader>s  → save the file, run pyforces-submit with the filename,
+--              and show a notification in the command line.
+vim.keymap.set("n", "<leader>s", function()
+      vim.cmd.write()                                   -- make sure file is saved
+      local file = vim.fn.expand("%:t")                 -- current buffer filename
+      local cmd  = "pyforces-submit -f " .. file
+      vim.cmd("!" .. cmd)                               -- run in shell
+      vim.notify("Submitted " .. file .. " to Codeforces", vim.log.levels.INFO)
+end, { desc = "Submit current file to Codeforces" })
 
