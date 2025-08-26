@@ -64,12 +64,12 @@
             "}",
             "",
             "int main(){",
-            "   fastio();",
-            "   int t; read(t);",
-            "   fo(i,1,t+1){",
-            "       debug(i);solve();",
+            "    fastio();",
+            "    int t; read(t);",
+            "    fo(i,1,t+1){",
+            "        debug(i);solve();",
             "    }",
-            "   return 0;",
+            "    return 0;",
             "}"
         ]
     },

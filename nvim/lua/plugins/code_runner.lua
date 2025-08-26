@@ -58,6 +58,6 @@ return {
         })
 
         -- Map Ctrl+n to :RunCode
-        vim.keymap.set("n", "<C-n>", "<Cmd>RunCode<CR>", { noremap = true, silent = true, desc = "Run code in float" })
+        vim.keymap.set("n", "<C-n>", ":w<CR><Cmd>RunCode<CR>", { noremap = true, silent = true, desc = "Run code in float" })
     end,
 }
