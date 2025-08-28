@@ -192,18 +192,6 @@ return {
             silent = true,
             noremap = true,
         },
-        -- {
-        --     "<C-A-n>",
-        --     function()
-        --         vim.cmd("normal! ggVG")
-        --         vim.cmd('normal! "+y')
-        --         vim.cmd("CompetiTest run")
-        --     end,
-        --     -- "<cmd>CompetiTest run<cr>",
-        --     desc = "Run testcases",
-        --     silent = true,
-        --     noremap = true,
-        -- },
         {
             "<leader>j",
             "<cmd>CompetiTest run<cr>",
