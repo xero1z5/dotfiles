@@ -74,7 +74,7 @@
         ]
     },
     "Bit Manipualtion Template": {
-        "prefix": "binary",
+        "prefix": "bitman",
         "body": [
             "int  popcnt (int x){ return __builtin_popcount (x); }",
             "int  popcnt (ll  x){ return __builtin_popcountll(x); }",
@@ -91,16 +91,16 @@
         "prefix": "pnc",
         "body": [
             "const int N=$0",
-            "vl fact(N)",
-            "vl invf(N)",
+            "vl fact(N);",
+            "vl invf(N);",
             "void factorial(){fact[0]=1;fo(i,1,N) fact[i]=fact[i-1]*i%mod;}",
-            "void invfact(){invf[N-1]=inv(fact[N-1],mod);fob(i,N-1,1) invf[i-1]=invf[i]*i%mod;}",
+            "void invfact(){invf[N-1]=inv(fact[N-1]);fob(i,N-1,1) invf[i-1]=invf[i]*i%mod;}",
             "ll nCr(int n,int r){return (r<0||r>n)?0:fact[n]*invf[r]%mod*invf[n-r]%mod;}",
             ""
         ]
     },
     "Numbers Template": {
-        "prefix": "numbers",
+        "prefix": "202",
         "body": [
             "bool checkComp(ll n,ll a,ll d,int s){ ll x=modpow(a,d,n); if(x==1||x==n-1) return false; fo(i,1,s){ x=1LL*x*x%n; if(x==n-1) return false; } return true; }",
             "",

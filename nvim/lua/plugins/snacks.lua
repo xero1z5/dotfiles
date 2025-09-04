@@ -37,6 +37,11 @@ return {
                 },
             },
         },
+        image = {
+            enabled = true,
+            inline = true,
+            float = true,
+        },
     },
     keys = {
         -- Smart picker (frecency-based) for home directory
