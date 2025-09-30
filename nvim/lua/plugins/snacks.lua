@@ -41,6 +41,7 @@ return {
             enabled = true,
             inline = true,
             float = true,
+            backend = "ueberzug",
         },
     },
     keys = {
