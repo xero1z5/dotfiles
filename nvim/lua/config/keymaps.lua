@@ -122,4 +122,3 @@ keymap("i", "<C-l>", "<Right>", opts) -- right
 keymap("i", "<C-e>", "<C-o>A", opts) -- move the end of the line
 
 
-
