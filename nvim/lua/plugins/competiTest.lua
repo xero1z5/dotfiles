@@ -100,7 +100,8 @@ return {
             -- },
             cpp = {
                 exec = "g++",
-                args = { "-std=c++20", "-O2", "-pipe", "-march=native", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
+                -- args = { "-std=c++20", "-O2", "-pipe", "-march=native", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" },
+                args = { "-std=c++23", "-O2", "$(FNAME)", "-o", "$(FNOEXT)"},
             },
         },
         running_directory = ".",
