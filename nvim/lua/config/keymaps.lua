@@ -19,6 +19,7 @@ end
 --  “jk” to escape insert mode and centre cursor
 ------------------------------------------------------------------------------
 keymap("i", "jk", "<Esc>zz", opts)
+keymap("v","jk","<Esc>zz",opts)
 
 ------------------------------------------------------------------------------
 --  Windows / splits navigation with Ctrl-h/j/k/l
