@@ -1,6 +1,8 @@
 # only run for interactive shells
 [[ $- != *i* ]] && return
 
+source ~/.dotfiles/zsh/greeter.zsh
+
 # --- environment -------------------------------------------------------------
 export EDITOR="${EDITOR:-nvim}"
 export VISUAL="$EDITOR"
@@ -87,7 +89,7 @@ else
 fi
 
 alias lg='lazygit'
-
+alias nvim='neovide --no-fork'
 
 # widget: expand last word if it's in ABBRS, otherwise insert the bound key (space)
 expand-or-insert-space() {
