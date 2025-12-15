@@ -1,7 +1,6 @@
 # only run for interactive shells
 [[ $- != *i* ]] && return
 
-source ~/.dotfiles/zsh/greeter.zsh
 
 # --- environment -------------------------------------------------------------
 export EDITOR="${EDITOR:-nvim}"
@@ -28,6 +27,7 @@ autoload -Uz compinit && compinit -u 2>/dev/null || true
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
+source ~/.dotfiles/zsh/greeter.zsh
 
 # --- direnv & zoxide ----------------------------------------------------------
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"

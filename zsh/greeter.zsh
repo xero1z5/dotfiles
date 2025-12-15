@@ -1,34 +1,52 @@
+# greeter.zsh
+[[ -o interactive ]] || return
+
+typeset -g __GREETER_SHOWN=0
+
 zsh_greeting() {
-  clear
+  tput clear
+  tput cup 0 0
 
   cols=$(tput cols)
-  rows=$(tput lines)
 
-  img_w=32    # width in terminal cells you want the image to occupy
-  img_h=24    # height in terminal cells
-  img_x=3
-  img_y=3
+  top_y=1
+  img_x=2
+  img_y=$top_y
+  gap=4
+  ff_width=42
 
-  # how many columns to push fastfetch right by (tweak +4 for spacing)
-  ff_margin=$((img_w + 4))
+  img_w=32
+  img_h=24
 
-  # create a pad string of ff_margin spaces
+  if (( cols < img_w + gap + ff_width )); then
+    img_w=24
+    img_h=18
+  fi
+
+  if (( cols < img_w + gap + ff_width )); then
+    fastfetch
+    return
+  fi
+
+  ff_margin=$(( img_x + img_w + gap ))
   pad=$(printf '%*s' "$ff_margin")
 
   if [[ "$TERM" == "xterm-kitty" ]]; then
-    # place image at left. --silent avoids extra messages from kitty
     kitty +kitten icat --silent \
       --place=${img_w}x${img_h}@${img_x}x${img_y} \
       ~/.dotfiles/zsh/logo.png
   fi
 
-  # move cursor a little down so fastfetch output doesn't start at the very top
-  tput cup 2 0
+  tput cup $(( top_y > 0 ? top_y - 1 : 0 )) 0
+  fastfetch | awk -v pad="$pad" '{ print pad $0 }'
+}
 
-  if command -v fastfetch >/dev/null; then
-    # prefix each line with the pad so fastfetch appears to the right of the image
-    fastfetch | awk -v pad="$pad" '{ print pad $0 }'
+__greeter_precmd() {
+  if (( __GREETER_SHOWN == 0 )); then
+    zsh_greeting
+    __GREETER_SHOWN=1
   fi
 }
 
-zsh_greeting
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd __greeter_precmd
