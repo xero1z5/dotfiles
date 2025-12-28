@@ -39,7 +39,7 @@ return {
             filetype = {
                 cpp = {
                     "cd $dir &&",
-                    "g++ -std=c++20 -g -Og $fileName -o $fileNameWithoutExt &&", --> Removed the debug compiler and moved to manual keymap
+                    "g++ -std=c++23 -O2 $fileName -o $fileNameWithoutExt &&", --> Removed the debug compiler and moved to manual keymap
                     -- "g++ -std=c++20 -O2 $fileName -o $fileNameWithoutExt &&",
                     "$dir/$fileNameWithoutExt",
                 },
