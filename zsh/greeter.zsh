@@ -69,7 +69,7 @@ zsh_greeting() {
   if [[ "$TERM" == "xterm-kitty" ]]; then
     kitty +kitten icat --silent \
       --place=${img_w}x${img_h}@${img_x}x${img_y} \
-      ~/.dotfiles/zsh/logo.png 2>/dev/null
+      ~/dotfiles/zsh/logo.png 2>/dev/null
   fi
   
   # ---- draw fastfetch ----

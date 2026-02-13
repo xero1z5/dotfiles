@@ -27,7 +27,7 @@ autoload -Uz compinit && compinit -u 2>/dev/null || true
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
-source ~/.dotfiles/zsh/greeter.zsh
+source ~/dotfiles/zsh/greeter.zsh
 
 # --- direnv & zoxide ----------------------------------------------------------
 command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
@@ -119,7 +119,7 @@ setopt EXTENDED_GLOB
 [ -f "${HOME}/.local/state/caelestia/sequences.txt" ] && cat "${HOME}/.local/state/caelestia/sequences.txt" 2>/dev/null
 
 # --- machine specific overrides --------------------------------------------------
-[ -f "$HOME/.dotfiles/zsh/.zshrc.local" ] && source "$HOME/.dotfiles/zsh/.zshrc.local"
+[ -f "$HOME/dotfiles/zsh/.zshrc.local" ] && source "$HOME/dotfiles/zsh/.zshrc.local"
 
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
