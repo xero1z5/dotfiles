@@ -1,7 +1,10 @@
 return {
     -- Mason for managing language servers, formatters, and linters
     {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
+        dependencies = {
+            "mason-org/mason-lspconfig.nvim"
+        },
         opts = function(_, opts)
             vim.list_extend(opts.ensure_installed, {
                 -- Python
@@ -207,22 +210,5 @@ return {
                 "rust",
             })
         end,
-    },
-
-    -- DAP for debugging (optional but recommended)
-    {
-        "mfussenegger/nvim-dap",
-        optional = true,
-        dependencies = {
-            {
-                "williamboman/mason.nvim",
-                opts = function(_, opts)
-                    vim.list_extend(opts.ensure_installed, {
-                        "debugpy", -- Python debugger
-                        "codelldb", -- C/C++/Rust debugger
-                    })
-                end,
-            },
-        },
     },
 }
