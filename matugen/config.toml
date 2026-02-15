@@ -1,53 +1,8 @@
-# ~/.config/matugen/config.toml
-# Matugen generates colors and renders these templates
-# every time you run `matugen image <wallpaper>`
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/hyprland/colors.conf'
+post_hook = 'hyprctl reload'
 
-[config]
-reload_apps = true          # auto-reload supported apps
-set_wallpaper = false       # we handle wallpaper ourselves in wallpaper.sh
-wallpaper_tool = "Hyprpaper"
-
-# Which Material You variant to use:
-# "scheme-tonal-spot"  — balanced, most natural (recommended)
-# "scheme-vibrant"     — more saturated
-# "scheme-expressive"  — very colorful
-# "scheme-fidelity"    — stays close to source image
-[config.color]
-default_scheme = "scheme-tonal-spot"
-
-# -------------------------------------------------------
-# TEMPLATES
-# matugen renders each template file substituting
-# {{colors.primary.hex}}, {{colors.surface.hex}} etc.
-# Full list: https://github.com/InioX/matugen/wiki/Template-variables
-# -------------------------------------------------------
-
-# -- Hyprland colors --
-[[templates]]
-input_path  = "~/.config/matugen/templates/hyprland-colors.conf"
-output_path = "~/.config/hypr/hyprland/colors.conf"
-
-# -- Kitty terminal --
-[[templates]]
-input_path  = "~/.config/matugen/templates/kitty-colors.conf"
-output_path = "~/.config/kitty/colors.conf"
-
-# -- Hyprlock --
-[[templates]]
-input_path  = "~/.config/matugen/templates/hyprlock-colors.conf"
-output_path = "~/.config/hypr/hyprlock-colors.conf"
-
-# -- GTK 4 (Thunar uses GTK3, Nautilus GTK4) --
-[[templates]]
-input_path  = "~/.config/matugen/templates/gtk4.css"
-output_path = "~/.config/gtk-4.0/gtk.css"
-
-# -- GTK 3 (Thunar) --
-[[templates]]
-input_path  = "~/.config/matugen/templates/gtk3.css"
-output_path = "~/.config/gtk-3.0/gtk.css"
-
-# -- Rofi --
-[[templates]]
-input_path  = "~/.config/matugen/templates/rofi-colors.rasi"
-output_path = "~/.config/rofi/colors.rasi"
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/colors.conf'
