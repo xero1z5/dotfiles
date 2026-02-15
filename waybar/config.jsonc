@@ -150,10 +150,15 @@
     "format": "⏻"
   },
   "custom/powermenu": {
-    "format": " \uf011  ",
-    "tooltip": false,
-    "on-click": "$HOME/.config/rofi/powermenu/powermenu.sh"
+        "format": " ⏻ ",
+        "on-click": "$HOME/.config/wlogout/wlogout.sh",
+        "tooltip": true,
   },
+  // "custom/powermenu": {
+  //   "format": " \uf011  ",
+  //   "tooltip": false,
+  //   "on-click": "$HOME/.config/rofi/powermenu/powermenu.sh"
+  // },
   "custom/notification": {
     "escape": true,
     "exec": "swaync-client -swb",
