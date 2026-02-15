@@ -16,7 +16,7 @@ vim.g.autoformat = false -- Disable autoformat on saving
 
 if vim.g.neovide then
     vim.opt.guifont = "JetBrainsMono Nerd Font:h15"
-    vim.g.neovide_opacity = 0.7
+    vim.g.neovide_opacity = 0.9
     vim.g.neovide_floating_blur_amount_x = 0.0
     vim.g.neovide_floating_blur_amount_y = 0.0
     vim.g.neovide_remember_window_size = false

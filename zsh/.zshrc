@@ -36,39 +36,42 @@ command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 # --- zsh-autosuggestions ------------------------------------------------------
 # highlight style: fish used brblack for autosuggestions -> map to bright black
 # (plugin expects style like 'fg=8' or 'fg=black,bold')
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'   # bright-black like fish's brblack
+# export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'   # bright-black like fish's brblack
+#
+# ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+# [ -f "${ZSH_CUSTOM}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+#   source "${ZSH_CUSTOM}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# [ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+#   source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-[ -f "${ZSH_CUSTOM}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-  source "${ZSH_CUSTOM}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-[ -f "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-  source "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # --- zsh-syntax-highlighting ---------------------------------------------------
 # Map fish colour choices to zsh-syntax-highlighting styles where sensible.
 # (You can tweak the right-hand values: 'fg=colour' or 'fg=color,bold' etc.)
 # Example mapping based on your fish vars:
-typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=red'
-ZSH_HIGHLIGHT_STYLES[command]='none'
-ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[bracket]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[path]='fg=green'                # fish_color_cwd -> green
-ZSH_HIGHLIGHT_STYLES[path_pathsep]='fg=red'          # fish_color_cwd_root -> red-ish
-ZSH_HIGHLIGHT_STYLES[parameter]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[quote]='fg=yellow'
-ZSH_HIGHLIGHT_STYLES[redirection]='fg=cyan,bold'     # fish had bold for redirection
-ZSH_HIGHLIGHT_STYLES[error]='fg=red,bold'
-ZSH_HIGHLIGHT_STYLES[status]='fg=red'
-ZSH_HIGHLIGHT_STYLES[user]='fg=10'                   # bright green (user color)
-ZSH_HIGHLIGHT_STYLES[match]='fg=white,bg=8,bold'     # search-match style, fish used white on brblack
-
-# now source the plugin (must be sourced after the style vars)
-if [ -f "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-  source "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
-  source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-fi
+# typeset -A ZSH_HIGHLIGHT_STYLES
+# ZSH_HIGHLIGHT_STYLES[comment]='fg=red'
+# ZSH_HIGHLIGHT_STYLES[command]='none'
+# ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=cyan'
+# ZSH_HIGHLIGHT_STYLES[bracket]='fg=cyan'
+# ZSH_HIGHLIGHT_STYLES[path]='fg=green'                # fish_color_cwd -> green
+# ZSH_HIGHLIGHT_STYLES[path_pathsep]='fg=red'          # fish_color_cwd_root -> red-ish
+# ZSH_HIGHLIGHT_STYLES[parameter]='fg=cyan'
+# ZSH_HIGHLIGHT_STYLES[quote]='fg=yellow'
+# ZSH_HIGHLIGHT_STYLES[redirection]='fg=cyan,bold'     # fish had bold for redirection
+# ZSH_HIGHLIGHT_STYLES[error]='fg=red,bold'
+# ZSH_HIGHLIGHT_STYLES[status]='fg=red'
+# ZSH_HIGHLIGHT_STYLES[user]='fg=10'                   # bright green (user color)
+# ZSH_HIGHLIGHT_STYLES[match]='fg=white,bg=8,bold'     # search-match style, fish used white on brblack
+#
+# # now source the plugin (must be sourced after the style vars)
+# if [ -f "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+#   source "${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# elif [ -f "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+#   source "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# fi
 
 # --- prompt mark for foot terminal (keeps behaviour used by your scripts) ------
 precmd() { [[ -t 1 ]] && printf '\e]133;A\e\\' ; }
