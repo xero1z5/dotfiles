@@ -1,3 +1,8 @@
+[config]
+mode = "dark"
+scheme_type = "tonal-spot"
+source_color = "#ffffff"
+
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.conf'
 output_path = '~/.config/hypr/hyprland/colors.conf'
@@ -6,3 +11,4 @@ post_hook = 'hyprctl reload'
 [templates.kitty]
 input_path = '~/.config/matugen/templates/kitty-colors.conf'
 output_path = '~/.config/kitty/colors.conf'
+post_hook = 'kill -SIGUSR1 $(pidof kitty)'
