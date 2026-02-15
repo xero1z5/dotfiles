@@ -1,0 +1,124 @@
+/* Waypaper Style — Pure Dark Theme */
+
+* {
+    all: unset;
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 13px;
+}
+
+window {
+    background-color: #0d0d0d;
+    color: #e0e0e0;
+    border-radius: 12px;
+    border: 1px solid #2a2a2a;
+}
+
+/* === TOOLBAR === */
+.toolbar,
+headerbar {
+    background-color: #0d0d0d;
+    border-bottom: 1px solid #2a2a2a;
+    padding: 6px 10px;
+    min-height: 40px;
+}
+
+/* === SEARCH / ENTRY === */
+entry {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    padding: 4px 10px;
+    caret-color: #ffffff;
+}
+
+entry:focus {
+    border-color: #555555;
+}
+
+/* === BUTTONS === */
+button {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 4px 10px;
+    transition: background-color 0.15s ease;
+}
+
+button:hover {
+    background-color: #1a1a1a;
+    border-color: #2a2a2a;
+}
+
+button:active {
+    background-color: #2a2a2a;
+}
+
+/* === WALLPAPER GRID === */
+scrolledwindow {
+    background-color: #0d0d0d;
+    border: none;
+}
+
+flowbox {
+    background-color: transparent;
+    padding: 10px;
+}
+
+flowboxchild {
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    padding: 4px;
+    transition: border-color 0.15s ease;
+}
+
+flowboxchild:hover {
+    border-color: #555555;
+}
+
+flowboxchild:selected {
+    border-color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+/* === THUMBNAIL IMAGE === */
+flowboxchild image {
+    border-radius: 8px;
+}
+
+/* === TOOLTIP === */
+tooltip {
+    background-color: #1a1a1a;
+    color: #a0a0a0;
+    border: 1px solid #2a2a2a;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+/* === SCROLLBAR === */
+scrollbar {
+    background-color: transparent;
+    min-width: 6px;
+}
+
+scrollbar slider {
+    background-color: #2a2a2a;
+    border-radius: 3px;
+    min-width: 6px;
+}
+
+scrollbar slider:hover {
+    background-color: #555555;
+}
+
+/* === LABEL / TEXT === */
+label {
+    color: #e0e0e0;
+}
+
+.dim-label {
+    color: #a0a0a0;
+}
