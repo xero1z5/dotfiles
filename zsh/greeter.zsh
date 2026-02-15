@@ -27,7 +27,7 @@ zsh_greeting() {
   
   # Your fastfetch config produces a box that's 41 chars wide
   # (╭───...───╮ is 39 chars + content fits in ~37 chars)
-  ff_width=41
+  ff_width=57
   
   # ---- image breakpoints ----
   img_w=32
@@ -37,8 +37,8 @@ zsh_greeting() {
   min_width=$(( img_w + gap + ff_width ))
   
   if (( cols < min_width )); then
-    img_w=24
-    img_h=18
+    img_w=20
+    img_h=13
     min_width=$(( img_w + gap + ff_width ))
   fi
   
