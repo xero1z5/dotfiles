@@ -8,6 +8,8 @@ export LANG="${LANG:-en_US.UTF-8}"
 export TERM="${TERM:-xterm-kitty}"
 export COLORTERM="${COLORTERM:-truecolor}"
 
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+
 # --- history -----------------------------------------------------------------
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
@@ -47,7 +49,10 @@ else
 fi
 
 alias lg='lazygit'
-alias nvim='neovide --no-fork & disown'
+
+nvim() {
+    neovide --no-fork "$@" & disown $!
+}
 
 # --- abbreviation expander ---------------------------------------------------
 typeset -gA ABBRS

@@ -16,7 +16,10 @@ return {
                 "codelldb",
                 -- Rust
                 "rust-analyzer",
-                "rustfmt",
+                -- C# / Unity
+                "omnisharp",
+                -- Java
+                "jdtls",
             })
         end,
     },
@@ -151,6 +154,23 @@ return {
                         },
                     },
                 },
+
+                -- C# / Unity
+                omnisharp = {
+                    cmd = { "omnisharp" },
+                    settings = {
+                        FormattingOptions = {
+                            EnableEditorConfigSupport = true,
+                        },
+                        RoslynExtentionsOptions = {
+                            EnableAnalyzersSupport = true,
+                            EnableImportCompletion = true,
+                        },
+                    },
+                },
+
+                -- Java
+                jdtls = {},
             },
 
             setup = {
@@ -176,7 +196,6 @@ return {
                 python = { "ruff_format", "ruff_organize_imports" },
                 c = { "clang_format" },
                 cpp = { "clang_format" },
-                rust = { "rustfmt" },
             },
             formatters = {
                 ruff_format = {
@@ -212,6 +231,8 @@ return {
                 "c",
                 "cpp",
                 "rust",
+                "c_sharp",
+                "java",
             })
         end,
     },
