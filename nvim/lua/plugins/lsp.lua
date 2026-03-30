@@ -3,7 +3,7 @@ return {
     {
         "mason-org/mason.nvim",
         dependencies = {
-            "mason-org/mason-lspconfig.nvim"
+            "mason-org/mason-lspconfig.nvim",
         },
         opts = function(_, opts)
             vim.list_extend(opts.ensure_installed, {
@@ -155,10 +155,14 @@ return {
 
             setup = {
                 ruff = function()
-                    require("lazyvim.util").lsp.on_attach(function(client, _)
-                        -- Disable hover in favor of pylsp
-                        client.server_capabilities.hoverProvider = false
-                    end, "ruff")
+                    vim.api.nvim_create_autocmd("LspAttach", {
+                        callback = function(args)
+                            local client = vim.lsp.get_client_by_id(args.data.client_id)
+                            if client and client.name == "ruff" then
+                                client.server_capabilities.hoverProvider = false
+                            end
+                        end,
+                    })
                 end,
             },
         },

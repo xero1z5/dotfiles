@@ -47,7 +47,7 @@ else
 fi
 
 alias lg='lazygit'
-alias nvim='neovide --no-fork'
+alias nvim='neovide --no-fork & disown'
 
 # --- abbreviation expander ---------------------------------------------------
 typeset -gA ABBRS
