@@ -168,9 +168,6 @@ return {
                         },
                     },
                 },
-
-                -- Java
-                jdtls = {},
             },
 
             setup = {
@@ -235,5 +232,11 @@ return {
                 "java",
             })
         end,
+    },
+    
+    -- Java LSP
+    {
+        "mfussenegger/nvim-jdtls",
+        ft = "java",
     },
 }

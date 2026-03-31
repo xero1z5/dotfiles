@@ -8,7 +8,7 @@ export LANG="${LANG:-en_US.UTF-8}"
 export TERM="${TERM:-xterm-kitty}"
 export COLORTERM="${COLORTERM:-truecolor}"
 
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
 # --- history -----------------------------------------------------------------
 HISTFILE="$HOME/.zsh_history"
