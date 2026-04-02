@@ -10,6 +10,12 @@ export COLORTERM="${COLORTERM:-truecolor}"
 
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 
+# -- for claude code via open router
+# load file
+if [ -f "$HOME/.claude_api" ]; then
+    source "$HOME/.claude_api"
+fi
+
 # --- history -----------------------------------------------------------------
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=10000
@@ -51,7 +57,7 @@ fi
 alias lg='lazygit'
 
 nvim() {
-    neovide --no-fork "$@" & disown $!
+    neovide --no-fork "$@" >/dev/null 2>&1
 }
 
 # --- abbreviation expander ---------------------------------------------------
