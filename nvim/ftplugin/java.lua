@@ -1,8 +1,6 @@
 local config = {
     cmd = { "jdtls" },
-    root_dir = vim.fs.dirname(
-        vim.fs.find({ "gradlew", "build.gradle", "pom.xml", ".git" }, { upward = true })[1]
-    ),
+    root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", "build.gradle", "pom.xml", ".git" }, { upward = true })[1]),
     data_dir = vim.fn.stdpath("cache") .. "/jdtls/" .. vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t"),
     settings = {
         java = {
@@ -21,6 +19,13 @@ local config = {
             referencesCodeLens = { enabled = true },
             inlayHints = { parameterNames = { enabled = "all" } },
             format = { enabled = true },
+
+            -- tell jdtls to process Lombok annotations
+            project = {
+                referencedLibraries = {
+                    vim.fn.expand("~/.gradle/caches/modules-*/files-*/*lombok*/*/*lombok*.jar"),
+                },
+            },
         },
         signatureHelp = { enabled = true },
     },
