@@ -57,6 +57,11 @@ return {
                     single_file_support = true,
 
                     root_dir = function(fname)
+
+                        if type(fname)~="string" then
+                            return nil
+                        end
+
                         local util = require("lspconfig.util")
 
                         local markers = {
@@ -64,7 +69,7 @@ return {
                             "setup.py",
                             "setup.cfg",
                             "requirements.txt",
-                            "Pipefile",
+                            "Pipfile",
                             ".git",
                         }
 
