@@ -1,0 +1,76 @@
+/*****----- WiFi Network Options Menu -----*****/
+/* Compact action menu — forget / disconnect / cancel                       */
+
+@import "~/.config/rofi/shared/fonts.rasi"
+@import "~/.config/rofi/colors/matugen.rasi"
+
+window {
+    transparency:     "real";
+    location:         center;
+    anchor:           center;
+    width:            380px;
+    border:           2px solid;
+    border-radius:    20px;
+    border-color:     @primary;
+    background-color: @surface-container-low;
+    padding:          0px;
+}
+
+mainbox {
+    spacing:          0px;
+    padding:          0px;
+    background-color: transparent;
+    children:         [ "message", "listview" ];
+}
+
+message {
+    padding:          18px 20px 8px 20px;
+    background-color: transparent;
+}
+
+textbox {
+    background-color: transparent;
+    text-color:       @on-surface-variant;
+    font:             "Lexend 13";
+    horizontal-align: 0.5;
+    padding:          0px;
+    border:           0px;
+}
+
+listview {
+    columns:          1;
+    lines:            4;
+    fixed-height:     false;
+    scrollbar:        false;
+    padding:          8px 12px 12px 12px;
+    spacing:          4px;
+    background-color: transparent;
+}
+
+element {
+    padding:          12px 16px;
+    border-radius:    12px;
+    background-color: transparent;
+    text-color:       @on-surface;
+    cursor:           pointer;
+}
+
+element selected {
+    background-color: @primary-container;
+    text-color:       @on-primary-container;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+}
+
+element-icon {
+    size:             0px;
+    background-color: transparent;
+}
+
+/* No input bar for this menu */
+inputbar { enabled: false; }
+mode-switcher { enabled: false; }

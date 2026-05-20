@@ -9,19 +9,22 @@
 }
 
 window#waybar {
-    background-color: alpha(@surface, 0.8);
-    color: #ffffff;
+    background-color: alpha(@surface, 0.85);
+    color: @on_surface;
     border-radius: 15px;
     transition-property: background-color;
     transition-duration: .5s;
 }
 
+/* ── Workspaces ──────────────────────────────────────────────────────────── */
+
 #workspaces button {
-    padding: 0.3rem 0.6rem;
+    padding: 0.35rem 0.7rem;
     margin: 0.4rem 0.25rem;
     border-radius: 6px;
     background-color: @surface_container;
     color: @on_surface;
+    transition: all 0.2s ease;
 }
 
 #workspaces button:hover {
@@ -39,65 +42,34 @@ window#waybar {
     color: @on_error;
 }
 
+/* ── All modules — shared pill style ────────────────────────────────────── */
+
 #clock,
 #pulseaudio,
-#wireplumber,
 #battery,
 #bluetooth,
 #network,
-#custom-logo,
-#custom-menu,
-#custom-power,
-#custom-spotify,
-#custom-notification,
+#backlight,
 #cpu,
-#tray,
 #memory,
+#tray,
 #window,
 #language,
-#mpris {
-    padding: 0.3rem 0.6rem;
-    margin: 0.4rem 0.25rem;
+#mpris,
+#custom-menu,
+#custom-notification,
+#custom-powermenu {
+    padding: 0.35rem 0.7rem;
+    margin: 0.4rem 0.15rem;
     border-radius: 6px;
-    /* background-color: #181825; */
     background-color: transparent;
     color: @primary;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-#mpris.playing {
-    color: #a6e3a1;
-}
-
-#mpris.paused {
-    color: #9399b2;
-}
-
-#custom-sep {
-    padding: 0px;
-    color: #585b70;
-}
-
-window#waybar.empty #window {
-    background-color: transparent;
-}
-
-#cpu {
-    color: #94e2d5;
-}
-
-#memory {
-    color: #cba6f7;
-}
+/* ── Module-specific colors ─────────────────────────────────────────────── */
 
 #clock {
-    color: @primary;
-}
-
-#clock.simpleclock {
-    color: @primary;
-}
-
-#window {
     color: @primary;
 }
 
@@ -106,22 +78,115 @@ window#waybar.empty #window {
 }
 
 #pulseaudio.muted {
+    color: @outline;
+}
+
+#battery {
     color: @primary;
 }
 
-#custom-logo {
+#battery.warning {
+    color: @tertiary;
+}
+
+#battery.critical {
+    color: @error;
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.charging {
     color: @primary;
 }
 
-#custom-power {
+@keyframes blink {
+    to { color: @on_error_container; }
+}
+
+#network {
+    color: @primary;
+}
+
+#network.disconnected {
     color: @error;
 }
+
+#bluetooth {
+    color: @primary;
+}
+
+#bluetooth.disabled {
+    color: @outline;
+}
+
+#bluetooth.connected {
+    color: @secondary;
+}
+
+#backlight {
+    color: @tertiary;
+}
+
+#cpu {
+    color: @secondary;
+}
+
+#memory {
+    color: @tertiary;
+}
+
+#window {
+    color: @on_surface_variant;
+}
+
+/* ── MPRIS ───────────────────────────────────────────────────────────────── */
+
+#mpris {
+    color: @primary;
+}
+
+#mpris.playing {
+    color: @primary;
+}
+
+#mpris.paused {
+    color: @outline;
+}
+
+/* ── Power menu / notification ───────────────────────────────────────────── */
 
 #custom-powermenu {
     color: @error;
 }
 
+#custom-notification {
+    color: @primary;
+}
+
+/* ── Tray ────────────────────────────────────────────────────────────────── */
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @error_container;
+    border-radius: 6px;
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────────────── */
+
 tooltip {
-    background-color: @background;
+    background-color: @surface_container_high;
     border: 2px solid @primary;
+    border-radius: 10px;
+    color: @on_surface;
+}
+
+tooltip label {
+    color: @on_surface;
 }

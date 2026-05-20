@@ -2,176 +2,174 @@
   "layer": "top",
   "margin": "5 5 0 5",
   "position": "top",
-  "height": 24,
-  "spacing": 2,  "exclusive": true,
+  "height": 46,
+  "spacing": 2,
+  "exclusive": true,
   "gtk-layer-shell": true,
   "passthrough": false,
   "fixed-center": true,
-  "modules-left": ["custom/menu", "hyprland/workspaces", "hyprland/window"],
+
+  "modules-left":   ["custom/menu", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["mpris"],
-  "modules-right": [
+  "modules-right":  [
     "tray",
     "hyprland/language",
+    "cpu",
+    "memory",
+    "backlight",
     "battery",
+    "bluetooth",
     "network",
     "pulseaudio",
     "clock",
     "custom/notification",
     "custom/powermenu"
   ],
-  "custom/spotify": {
-    "format": "  {}",
-    "return-type": "json",
-    "on-click": "playerctl -p spotify play-pause",
-    "on-click-right": "spotifatius toggle-liked",
-    "on-click-middle": "playerctl -p spotify next",
-    "exec": "spotifatius monitor"
+
+  // ── Left ─────────────────────────────────────────────────────────────────
+
+  "custom/menu": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "$HOME/.config/rofi/launcher/launcher.sh"
   },
-  "mpris": {
-    "player": "spotify",
-    "dynamic-order": ["artist", "title"],
-    "format": "{player_icon} {dynamic}",
-    "format-paused": "{status_icon} <i>{dynamic}</i>",
-    "status-icons": {
-      "paused": ""
-    },
-    "player-icons": {
-      "default": ""
-    }
-  },
+
   "hyprland/workspaces": {
-    "on-click": "activate",
-    "format": "{id}",
-    "all-outputs": true,
+    "on-click":      "activate",
+    "format":        "{id}",
+    "all-outputs":   true,
     "disable-scroll": false,
-    "active-only": false
+    "active-only":   false
   },
+
   "hyprland/window": {
     "format": "{class}",
     "rewrite": {
-        "librewolf": " librewolf",
-        "firefox": " firefox",
-        "kitty": " kitty",
-        "spotify": " spotify",
-        "code": "󰨞 code",
-        "com.ayugram.desktop": " telegram",   
-        "discord": " discord",
-        "steam": " steam"
-        },
-    },
-    "custom/menu": {
-        "format": "",
-        "tooltip": false,
-        "on-click": "$HOME/.config/rofi/launcher/launcher.sh"
-    },
+      "librewolf":             " librewolf",
+      "firefox":               " firefox",
+      "kitty":                 " kitty",
+      "spotify":               " spotify",
+      "code":                  "󰨞 code",
+      "com.ayugram.desktop":   " telegram",
+      "discord":               " discord",
+      "steam":                 " steam"
+    }
+  },
+
+  // ── Center ───────────────────────────────────────────────────────────────
+
+  "mpris": {
+    "player":        "spotify",
+    "dynamic-order": ["artist", "title"],
+    "format":        "{player_icon} {dynamic}",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "status-icons":  { "paused": "" },
+    "player-icons":  { "default": "" }
+  },
+
+  // ── Right ────────────────────────────────────────────────────────────────
+
   "tray": {
     "show-passive-items": true,
     "spacing": 10
   },
-  "clock": {
-    "format": " {:%H:%M}",
-    "format-alt": " {:L%a %d %b}",
-    "tooltip": false
+
+  "hyprland/language": {
+    "format":    " {} ",
+    "format-en": "us",
+    "format-ua": "ua",
+    "format-ru": "ru"
   },
+
   "cpu": {
-    "format": " {usage}%",
-    "tooltip": true,
-    "interval": 1
+    "format":   "󰘚 {usage}%",
+    "tooltip":  true,
+    "interval": 3
   },
+
   "memory": {
-    "format": " {used:0.1f}Gi"
+    "format":   "󰍛 {used:0.1f}G",
+    "interval": 5
   },
-  "pulseaudio": {
-    "format": "{icon} {volume}%",
-    "format-muted": "  muted",
-    "format-icons": {
-      "headphone": "",
-      "default": [" ", " ", " "]
+
+  "backlight": {
+    "format":       "{icon} {percent}%",
+    "format-icons": ["󰃛", "󰃜", "󰃝", "󰃞", "󰃟", "󰃠"],
+    "on-click":     "$HOME/dotfiles/hypr/scripts/brightness.sh",
+    "on-scroll-up":   "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "tooltip":      false
+  },
+
+  "battery": {
+    "bat":      "BAT1",
+    "interval": 60,
+    "states": {
+      "warning":  30,
+      "critical": 15
     },
-    "on-click": "control --volume",
+    "events": {
+      "on-discharging-warning":  "notify-send -u normal   'Low Battery'      'You have less than 30% battery left'",
+      "on-discharging-critical": "notify-send -u critical 'Very Low Battery'  'You have less than 15% battery left'"
+    },
+    "format":          "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "tooltip-format":  "Time left: {time}",
+    "format-icons": {
+      "default": ["󰁺", "󰁻", "󰁽", "󰁿", "󰂁", "󰂂", "󰁹"]
+    }
+  },
+
+  "bluetooth": {
+    "format":           "󰂯",
+    "format-disabled":  "󰂲",
+    "format-connected": "󰂱 {device_alias}",
+    "on-click":         "$HOME/dotfiles/hypr/scripts/bluetooth.sh",
+    "tooltip-format":            "{controller_alias}  {controller_address}",
+    "tooltip-format-connected":  "{controller_alias}  {controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}  {device_address}"
+  },
+
+  "network": {
+    "format":              "󰤮",
+    "format-ethernet":     "󰈀 {ifname}",
+    "format-wifi":         "{icon} {essid}",
+    "format-disconnected": "󰤯 disconnected",
+    "format-icons":        ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "on-click":            "$HOME/dotfiles/hypr/scripts/wifi.sh",
+    "tooltip-format-wifi":       "{essid} ({signalStrength}%)",
+    "tooltip-format-ethernet":   "{ifname}",
+    "tooltip-format-disconnected": "disconnected"
+  },
+
+  "pulseaudio": {
+    "format":       "{icon} {volume}%",
+    "format-muted": "󰝟  muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "default":   ["󰕿", "󰖀", "󰕾"]
+    },
+    "on-click":   "pavucontrol",
+    "on-scroll-up":   "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     "max-volume": 150
   },
-    "network": {
-        "format": "",
-        "on-click": "control --wifi",
-        "format-ethernet": "\udb83\udc9d {ifname}",
-        "format-wifi": "{icon} {essid}",
-        "format-disconnected": "\udb83\udc9c disconnected",
-        "format-icons": ["\udb82\udd2f", "\udb82\udd1f", "\udb82\udd22", "\udb82\udd25", "\udb82\udd28"],
-        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
-        "tooltip-format-ethernet": "{ifname}",
-        "tooltip-format-disconnected": "disconnected"
-    },
 
-    "bluetooth": {
-        "format": "\udb80\udcaf",
-        "on-click": "control --bluetooth",
-        "format-disabled": "\udb80\udcb2",
-        "format-connected": "\udb80\udcb1",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
-    },
-
-    "hyprland/language": {
-        "format": " {} ",
-        "format-en": "us",
-        "format-ua": "ua",
-        "format-ru": "ru"
-    },
-
-    "battery": {
-        "bat": "BAT1",
-        "interval": 60,
-        "states": {
-		"warning": 30,
-		"critical": 15
-	},
-	"events": {
-		"on-discharging-warning": "notify-send -u normal 'low battery' 'you have less then 30% battery left'",
-		"on-discharging-critical": "notify-send -u critical 'very low battery' 'you have less then 15% battery left'"
-	},
-        "format": "{icon} {capacity}%",
-        "format-charging": "{icon} ",
-        "tooltip-format": "time left: {time}",
-        "on-click": "control --battery",
-        "format-icons": {
-        "default": ["", "", "", "", ""]
-    }
-    },
-
-  "custom/sep": {
-    "format": "|",
-    "tooltip": false
+  "clock": {
+    "format":     "󰥔 {:%H:%M}",
+    "format-alt": "󰃭 {:L%a %d %b}",
+    "tooltip":    false
   },
-  "custom/power": {
-    "tooltip": false,
-    "on-click": "wlogout -p layer-shell &",
-    "format": "⏻"
-  },
-  "custom/powermenu": {
-        "format": " ⏻ ",
-        "on-click": "$HOME/.config/wlogout/wlogout.sh",
-        "tooltip": true,
-  },
-  // "custom/powermenu": {
-  //   "format": " \uf011  ",
-  //   "tooltip": false,
-  //   "on-click": "$HOME/.config/rofi/powermenu/powermenu.sh"
-  // },
+
   "custom/notification": {
-    "escape": true,
-    "exec": "swaync-client -swb",
-    "exec-if": "which swaync-client",
-    "format": "{icon}",
-    "format-icons": {
-      "none": "󰅺",
-      "notification": "󰡟"
-    },
-    "on-click": "sleep 0.1 && swaync-client -t -sw",
-    "return-type": "json",
-    "tooltip": false
+    "format":   "󰂚",
+    "tooltip":  false,
+    "on-click": "dunstctl history-pop"
   },
-}
-}
 
+  "custom/powermenu": {
+    "format":   " ⏻ ",
+    "on-click": "$HOME/.config/wlogout/wlogout.sh",
+    "tooltip":  false
+  }
+}
