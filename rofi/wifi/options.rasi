@@ -1,5 +1,5 @@
 /*****----- WiFi Network Options Menu -----*****/
-/* Compact action menu — forget / disconnect / cancel                       */
+/* Compact action menu — connect / disconnect / forget / cancel              */
 
 @import "~/.config/rofi/shared/fonts.rasi"
 @import "~/.config/rofi/colors/matugen.rasi"
@@ -40,6 +40,7 @@ textbox {
 listview {
     columns:          1;
     lines:            4;
+    dynamic:          true;
     fixed-height:     false;
     scrollbar:        false;
     padding:          8px 12px 12px 12px;
