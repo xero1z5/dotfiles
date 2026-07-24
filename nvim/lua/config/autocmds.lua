@@ -65,3 +65,13 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- Unity Code Lens
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client and client.server_capabilities.codeLensProvider then
+            -- This single call turns on CodeLens and handles the refresh loop automatically
+            vim.lsp.codelens.enable(true)
+        end
+    end,
+})

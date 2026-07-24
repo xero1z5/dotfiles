@@ -8,7 +8,9 @@ export LANG="${LANG:-en_US.UTF-8}"
 export TERM="${TERM:-xterm-kitty}"
 export COLORTERM="${COLORTERM:-truecolor}"
 
+export PATH="$HOME/.cargo/bin:$PATH"
 export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export PATH=~/.npm-global/bin:$PATH
 
 # -- for claude code via open router
 # load file
@@ -90,3 +92,13 @@ setopt CORRECT EXTENDED_GLOB
 
 # --- greeter -----------------------------------------------------------------
 fastfetch
+export PATH="/home/xero/.cmake-deps/cmake/linux/x64/bin:$PATH" # Added by JetBrains IDE
+
+# bun completions
+[ -s "/home/xero/.bun/_bun" ] && source "/home/xero/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "$HOME/.local/share/../bin/env"

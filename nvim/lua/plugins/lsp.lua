@@ -17,7 +17,7 @@ return {
                 -- Rust
                 "rust-analyzer",
                 -- C# / Unity
-                "omnisharp",
+                "roslyn-language-server",
                 -- Java
                 "jdtls",
             })
@@ -159,20 +159,6 @@ return {
                         },
                     },
                 },
-
-                -- C# / Unity
-                omnisharp = {
-                    cmd = { "omnisharp" },
-                    settings = {
-                        FormattingOptions = {
-                            EnableEditorConfigSupport = true,
-                        },
-                        RoslynExtentionsOptions = {
-                            EnableAnalyzersSupport = true,
-                            EnableImportCompletion = true,
-                        },
-                    },
-                },
             },
 
             setup = {
@@ -188,6 +174,15 @@ return {
                 end,
             },
         },
+    },
+
+    -- C# unity
+    {
+        "seblyng/roslyn.nvim",
+        ft = { "cs" },
+        opts = {
+            filewatching = "roslyn",
+        }
     },
 
     -- Formatting configuration
