@@ -4,13 +4,13 @@ scheme_type = "tonal-spot"
 source_color = "#ffffff"
 
 [templates.hyprland]
-input_path = '~/.config/matugen/templates/hyprland-colors.conf'
-output_path = '~/.config/hypr/hyprland/colors.conf'
+input_path = '~/.config/matugen/templates/hyprland-colors.lua'
+output_path = '~/.config/hypr/hyprland/colors.lua'
 post_hook = 'hyprctl reload'
 
 [templates.hyprlock]
 input_path = '~/.config/matugen/templates/hyprlock-colors.conf'
-output_path = '~/.config/hypr/hyprland/colors.conf'
+output_path = '~/.config/hypr/hyprlock-colors.conf'
 
 [templates.kitty]
 input_path = '~/.config/matugen/templates/kitty-colors.conf'
@@ -29,5 +29,3 @@ post_hook = 'pkill -SIGUSR2 waybar'
 [templates.starship]
 input_path = '~/.config/matugen/templates/starship-colors.toml'
 output_path = '~/.config/starship/starship.toml'
-
-
