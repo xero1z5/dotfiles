@@ -4,6 +4,27 @@
 -- 1. GENERAL WINDOW BEHAVIOR
 -- =====================================================
 
+-- Ignore maximize requests from all apps (prevents apps from taking full screen instead of tiling)
+hl.window_rule({
+    name  = "suppress-maximize-events",
+    match = { class = ".*" },
+    suppress_event = "maximize",
+})
+
+-- Fix some dragging issues with XWayland
+hl.window_rule({
+    name  = "fix-xwayland-drags",
+    match = {
+        class      = "^$",
+        title      = "^$",
+        xwayland   = true,
+        float      = true,
+        fullscreen = false,
+        pin        = false,
+    },
+    no_focus = true,
+})
+
 -- Disable blur for xwayland context menus (empty class+title)
 hl.window_rule({
     match = { class = "^()$", title = "^()$" },

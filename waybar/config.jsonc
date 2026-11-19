@@ -149,7 +149,8 @@
       "headphone": "󰋋",
       "default":   ["󰕿", "󰖀", "󰕾"]
     },
-    "on-click":   "pavucontrol",
+    "on-click":       "pavucontrol",
+    "on-click-right": "bash ~/.config/hypr/scripts/audio.sh",
     "on-scroll-up":   "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
     "max-volume": 150
