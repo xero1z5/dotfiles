@@ -209,6 +209,13 @@ hl.workspace_rule({
 -- 6. LAYER RULES (Quickshell / AGS / Bars)
 -- =====================================================
 
+-- Quickshell blur & ignore alpha
+hl.layer_rule({
+    match = { namespace = "quickshell.*" },
+    blur = true,
+    ignore_alpha = 0.2,
+})
+
 -- Waybar blur
 hl.layer_rule({
     match = { namespace = "waybar" },

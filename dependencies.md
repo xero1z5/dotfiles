@@ -9,7 +9,8 @@ This is a comprehensive list of dependencies required for a new Arch Linux insta
 * `polkit-kde-agent` - Authentication agent (`/usr/lib/polkit-kde-authentication-agent-1`)
 
 ## 🎨 UI & Theming Components
-* `waybar` - Highly customizable Wayland bar
+* `quickshell` - QtQuick/QML desktop shell framework (official extra repo)
+* `waybar` - Highly customizable Wayland bar (legacy/fallback)
 * `rofi-wayland` - Application launcher, menus, and scripts UI
 * `wlogout` - Wayland-based logout menu
 * `dunst` - Notification daemon

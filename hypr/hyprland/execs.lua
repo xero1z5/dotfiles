@@ -10,7 +10,13 @@ hl.on("hyprland.start", function()
 
     hl.exec_cmd("kanshi")
 
-    hl.exec_cmd(home .. "/.config/waybar/launch.sh")
+    -- Desktop Shell: Toggle between Quickshell and Waybar
+    local USE_QUICKSHELL = true
+    if USE_QUICKSHELL then
+        hl.exec_cmd("quickshell")
+    else
+        hl.exec_cmd(home .. "/.config/waybar/launch.sh")
+    end
 
     hl.exec_cmd("hypridle")
 

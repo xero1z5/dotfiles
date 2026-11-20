@@ -74,7 +74,7 @@ mkdir -p "$CONFIG_DIR"
 
 # List of folders in dotfiles/ that go into ~/.config/
 CONFIGS=(
-    fastfetch hypr kanshi kitty matugen nvim ohmyposh rofi 
+    fastfetch hypr kanshi kitty matugen nvim ohmyposh quickshell rofi 
     starship waybar waypaper wireplumber wlogout
 )
 
