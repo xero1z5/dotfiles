@@ -3,23 +3,18 @@ import Quickshell
 
 import "theme"
 import "bar"
-import "dock"
 import "controlcenter"
 import "notifications"
 
 ShellRoot {
     id: root
 
-    // Top Status Bar (Athena island style)
+    // Top Status Bar (Athena / end-4 inspired)
     Bar {}
 
-    // Home Dock (Bottom floating island with pinned & running apps)
-    Dock {}
-
-    // Control Center (Athena quick settings, audio/brightness sliders, power)
+    // Athena Control Center (Wi-Fi, Bluetooth, Sliders, Quick Toggles, Session)
     ControlCenter {}
 
-    // Notification Daemon & Toast Popups (Replaces Dunst)
+    // Notification Daemon & Toast Popups
     Notifications {}
 }
-

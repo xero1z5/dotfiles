@@ -25,16 +25,18 @@ Scope {
         }
 
         margins {
-            top: 52
-            right: 14
+            top: 72
+            right: 20
         }
 
         exclusiveZone: 0
         WlrLayershell.layer: WlrLayershell.Overlay
         WlrLayershell.namespace: "quickshell:notifications"
 
+        visible: !GlobalState.dndActive
+
         color: "transparent"
-        implicitWidth: 320
+        implicitWidth: 380
         implicitHeight: notifColumn.implicitHeight
 
         ColumnLayout {
@@ -79,15 +81,15 @@ Scope {
                             Text {
                                 text: modelData.appName || "Notification"
                                 font.family: Theme.font
-                                font.pixelSize: 11
+                                font.pixelSize: 12
                                 font.weight: Font.Bold
                                 color: Theme.primary
                                 Layout.fillWidth: true
                             }
 
                             MouseArea {
-                                implicitWidth: 20
-                                implicitHeight: 20
+                                implicitWidth: 24
+                                implicitHeight: 24
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: modelData.dismiss()
 
@@ -95,7 +97,7 @@ Scope {
                                     anchors.centerIn: parent
                                     text: "󰅖"
                                     font.family: Theme.monoFont
-                                    font.pixelSize: 12
+                                    font.pixelSize: 14
                                     color: Theme.textMuted
                                 }
                             }
@@ -106,7 +108,7 @@ Scope {
                             Layout.fillWidth: true
                             text: modelData.summary
                             font.family: Theme.font
-                            font.pixelSize: 13
+                            font.pixelSize: 14
                             font.weight: Font.DemiBold
                             color: Theme.text
                             wrapMode: Text.WordWrap
@@ -118,7 +120,7 @@ Scope {
                             Layout.fillWidth: true
                             text: modelData.body
                             font.family: Theme.font
-                            font.pixelSize: 11
+                            font.pixelSize: 12
                             color: Theme.textMuted
                             wrapMode: Text.WordWrap
                             visible: text !== ""

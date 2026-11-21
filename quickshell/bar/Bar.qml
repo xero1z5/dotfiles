@@ -9,85 +9,137 @@ import "../theme"
 PanelWindow {
     id: barWindow
 
+    // Floating centered island bar (end-4 floating style)
     anchors {
         top: true
-        left: true
-        right: true
     }
 
     margins {
-        top: 8
-        left: 12
-        right: 12
+        top: 10
     }
 
-    implicitHeight: 38
-    exclusiveZone: 46
+    width: Math.round((barWindow.screen ? barWindow.screen.width : 2560) * GlobalConfig.barWidthRatio)
+    implicitHeight: GlobalConfig.barHeight
+    exclusiveZone: GlobalConfig.barHeight + 10
     color: "transparent"
 
     WlrLayershell.layer: WlrLayershell.Top
     WlrLayershell.namespace: "quickshell:bar"
 
-    // Background panel with rounded island corners (Athena / Caelestia aesthetic)
+    // Background panel with dynamic Material 3 colors from wallpaper
     Rectangle {
         anchors.fill: parent
-        color: Qt.rgba(Theme.bgSurface.r, Theme.bgSurface.g, Theme.bgSurface.b, 0.85)
-        radius: Theme.radiusMd
+        color: Qt.rgba(Theme.bgSurface.r, Theme.bgSurface.g, Theme.bgSurface.b, 0.92)
+        radius: GlobalConfig.cornerRadius
         border.color: Theme.outlineMuted
         border.width: 1
 
-        RowLayout {
+        Item {
             anchors.fill: parent
-            anchors.leftMargin: 10
-            anchors.rightMargin: 10
-            spacing: 8
+            anchors.leftMargin: 14
+            anchors.rightMargin: 14
 
-            // -------------------------------------------------------------
-            // 1. LEFT: Launcher + Workspaces
-            // -------------------------------------------------------------
-            Rectangle {
-                id: launcherBtn
-                Layout.preferredWidth: 30
-                Layout.preferredHeight: 26
-                radius: Theme.radiusSm
-                color: launcherMouse.containsMouse ? Theme.bgPill : "transparent"
+            // =============================================================
+            // 1. LEFT SECTION: Launcher + Active Window Title
+            // =============================================================
+            RowLayout {
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: centerWorkspaces.left
+                anchors.rightMargin: 20
+                spacing: 10
 
-                Text {
-                    anchors.centerIn: parent
-                    text: "󰣇"
-                    font.family: Theme.monoFont
-                    font.pixelSize: 15
-                    color: Theme.primary
-                }
+                // App Launcher
+                Rectangle {
+                    id: launcherBtn
+                    Layout.preferredWidth: 42
+                    Layout.preferredHeight: 38
+                    radius: Theme.radiusSm
+                    color: launcherMouse.containsMouse ? Theme.bgPill : "transparent"
 
-                MouseArea {
-                    id: launcherMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        launcherProc.running = true
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: Theme.animFast
+                            easing.type: Easing.BezierSpline
+                            easing.bezierCurve: Theme.expressiveFastCurve
+                        }
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: "󰣇"
+                        font.family: Theme.monoFont
+                        font.pixelSize: 22
+                        color: Theme.primary
+                    }
+
+                    MouseArea {
+                        id: launcherMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: launcherProc.running = true
+                    }
+
+                    Process {
+                        id: launcherProc
+                        command: ["rofi", "-show", "drun"]
                     }
                 }
 
-                Process {
-                    id: launcherProc
-                    command: ["rofi", "-show", "drun"]
+                // Active Window Title Pill
+                Rectangle {
+                    Layout.preferredHeight: 38
+                    Layout.maximumWidth: 380
+                    visible: GlobalConfig.showWindowTitles && Boolean(Hyprland.focusedWindow && Hyprland.focusedWindow.title && Hyprland.focusedWindow.title.length > 0)
+                    color: Theme.bgPill
+                    radius: Theme.radiusFull
+                    implicitWidth: Math.min(titleRow.implicitWidth + 24, 380)
+
+                    RowLayout {
+                        id: titleRow
+                        anchors.centerIn: parent
+                        anchors.leftMargin: 14
+                        anchors.rightMargin: 14
+                        spacing: 8
+
+                        Text {
+                            text: "󰖲"
+                            font.family: Theme.monoFont
+                            font.pixelSize: 15
+                            color: Theme.primary
+                        }
+
+                        Text {
+                            text: (Hyprland.focusedWindow && Hyprland.focusedWindow.title) ? Hyprland.focusedWindow.title : ""
+                            font.family: Theme.font
+                            font.pixelSize: 13
+                            font.weight: Font.DemiBold
+                            color: Theme.text
+                            elide: Text.ElideRight
+                            Layout.maximumWidth: 320
+                        }
+                    }
                 }
+
+                Item { Layout.fillWidth: true }
             }
 
-            // Workspaces (Fluid morphing pills inspired by Athena & Caelestia)
+            // =============================================================
+            // 2. DEAD CENTER: Workspaces (Always Centered on Screen)
+            // =============================================================
             Rectangle {
-                Layout.preferredHeight: 26
-                Layout.alignment: Qt.AlignVCenter
+                id: centerWorkspaces
+                anchors.centerIn: parent
+                height: 40
                 color: Theme.bgPill
                 radius: Theme.radiusFull
-                implicitWidth: wsRow.implicitWidth + 14
+                implicitWidth: wsRow.implicitWidth + 26
 
                 Row {
                     id: wsRow
                     anchors.centerIn: parent
-                    spacing: 6
+                    spacing: 8
 
                     Repeater {
                         model: 5
@@ -100,23 +152,31 @@ PanelWindow {
                             readonly property bool isFocused: Hyprland.focusedWorkspace ? (Hyprland.focusedWorkspace.id === wsId) : false
                             readonly property bool hasWindows: wsObj !== undefined
 
-                            height: 8
-                            radius: 4
+                            height: 12
+                            radius: 6
 
-                            // Dynamic morphing width: focused workspace expands
-                            width: isFocused ? 24 : (hasWindows ? 12 : 8)
+                            // Fluid end-4 style morphing width animation with bezier curve
+                            width: isFocused ? 38 : (hasWindows ? 18 : 10)
                             Behavior on width {
-                                NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
+                                NumberAnimation {
+                                    duration: Theme.animNormal
+                                    easing.type: Easing.BezierSpline
+                                    easing.bezierCurve: Theme.expressiveDefaultCurve
+                                }
                             }
 
                             color: isFocused ? Theme.primary : (hasWindows ? Theme.textMuted : Theme.outline)
                             Behavior on color {
-                                ColorAnimation { duration: 150 }
+                                ColorAnimation {
+                                    duration: Theme.animFast
+                                    easing.type: Easing.BezierSpline
+                                    easing.bezierCurve: Theme.expressiveFastCurve
+                                }
                             }
 
                             MouseArea {
                                 anchors.fill: parent
-                                anchors.margins: -4 // Larger click area
+                                anchors.margins: -8
                                 hoverEnabled: true
                                 cursorShape: Qt.PointingHandCursor
                                 onClicked: Hyprland.dispatch("workspace " + wsId)
@@ -126,100 +186,163 @@ PanelWindow {
                 }
             }
 
-            // -------------------------------------------------------------
-            // 2. CENTER: Focused Window Title
-            // -------------------------------------------------------------
-            Item { Layout.fillWidth: true }
+            // =============================================================
+            // 3. RIGHT SECTION: Status Indicators + Clock & Date on Extreme Right
+            // =============================================================
+            RowLayout {
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: centerWorkspaces.right
+                anchors.leftMargin: 20
+                spacing: 10
 
-            Rectangle {
-                Layout.preferredHeight: 24
-                Layout.maximumWidth: 360
-                visible: (Hyprland.focusedWindow && Hyprland.focusedWindow.title) ? Hyprland.focusedWindow.title.length > 0 : false
-                color: "transparent"
+                Item { Layout.fillWidth: true }
 
-                Text {
-                    anchors.centerIn: parent
-                    width: Math.min(implicitWidth, 340)
-                    text: (Hyprland.focusedWindow && Hyprland.focusedWindow.title) ? Hyprland.focusedWindow.title : ""
-                    font.family: Theme.font
-                    font.pixelSize: 12
-                    font.weight: Font.DemiBold
-                    color: Theme.textMuted
-                    elide: Text.ElideRight
-                    horizontalAlignment: Text.AlignHCenter
+                // Quick Status Cluster Pill
+                Rectangle {
+                    Layout.preferredHeight: 38
+                    implicitWidth: rightPillLayout.implicitWidth + 24
+                    color: Theme.bgPill
+                    radius: Theme.radiusFull
+
+                    RowLayout {
+                        id: rightPillLayout
+                        anchors.centerIn: parent
+                        spacing: 14
+
+                        // Audio
+                        Text {
+                            text: "󰕾"
+                            font.family: Theme.monoFont
+                            font.pixelSize: 16
+                            color: Theme.primary
+                        }
+
+                        // Network
+                        Text {
+                            text: GlobalState.wifiEnabled ? "󰤨" : "󰤮"
+                            font.family: Theme.monoFont
+                            font.pixelSize: 16
+                            color: GlobalState.wifiEnabled ? Theme.text : Theme.textMuted
+                        }
+
+                        // Bluetooth
+                        Text {
+                            text: GlobalState.btEnabled ? "󰂯" : "󰂲"
+                            font.family: Theme.monoFont
+                            font.pixelSize: 16
+                            color: GlobalState.btEnabled ? Theme.text : Theme.textMuted
+                        }
+
+                        // Separator
+                        Text {
+                            text: "│"
+                            font.pixelSize: 14
+                            color: Theme.outline
+                        }
+
+                        // Notification Bell
+                        Text {
+                            text: GlobalState.dndActive ? "󰂛" : "󰂚"
+                            font.family: Theme.monoFont
+                            font.pixelSize: 16
+                            color: GlobalState.dndActive ? Theme.urgent : Theme.textMuted
+                        }
+                    }
                 }
-            }
 
-            Item { Layout.fillWidth: true }
+                // Extreme Right: Date & Time Pill
+                Rectangle {
+                    Layout.preferredHeight: 38
+                    implicitWidth: clockLayout.implicitWidth + 26
+                    color: Theme.bgPill
+                    radius: Theme.radiusFull
 
-            // -------------------------------------------------------------
-            // 3. RIGHT: Clock + Quick Toggles + Control Center Button
-            // -------------------------------------------------------------
-            // Clock Pill
-            Rectangle {
-                Layout.preferredHeight: 26
-                implicitWidth: clockText.implicitWidth + 16
-                color: Theme.bgPill
-                radius: Theme.radiusFull
+                    RowLayout {
+                        id: clockLayout
+                        anchors.centerIn: parent
+                        spacing: 8
 
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 6
+                        Text {
+                            font.family: Theme.monoFont
+                            font.pixelSize: 16
+                            text: "󱑂"
+                            color: Theme.primary
+                        }
+
+                        Text {
+                            id: clockTime
+                            text: Qt.formatDateTime(clockTimer.currentTime, "hh:mm AP")
+                            font.family: Theme.font
+                            font.pixelSize: 14
+                            font.weight: Font.Bold
+                            color: Theme.text
+                        }
+
+                        Rectangle {
+                            visible: GlobalConfig.showClockDate
+                            width: 4
+                            height: 4
+                            radius: 2
+                            color: Theme.textMuted
+                        }
+
+                        Text {
+                            id: clockDate
+                            visible: GlobalConfig.showClockDate
+                            text: Qt.formatDateTime(clockTimer.currentTime, "ddd, MMM d")
+                            font.family: Theme.font
+                            font.pixelSize: 13
+                            font.weight: Font.Medium
+                            color: Theme.textMuted
+                        }
+                    }
+
+                    Timer {
+                        id: clockTimer
+                        interval: 1000
+                        running: true
+                        repeat: true
+                        property var currentTime: new Date()
+                        onTriggered: currentTime = new Date()
+                    }
+                }
+
+                // Quick Settings / Control Center Trigger Button
+                Rectangle {
+                    id: ccTrigger
+                    Layout.preferredWidth: 42
+                    Layout.preferredHeight: 38
+                    radius: Theme.radiusSm
+                    color: (GlobalState.controlCenterOpen || ccMouse.containsMouse) ? Theme.primaryContainer : Theme.bgPill
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: Theme.animFast
+                            easing.type: Easing.BezierSpline
+                            easing.bezierCurve: Theme.expressiveFastCurve
+                        }
+                    }
 
                     Text {
+                        anchors.centerIn: parent
+                        text: "󰒓"
                         font.family: Theme.monoFont
-                        font.pixelSize: 12
-                        text: "󱑂"
-                        color: Theme.primary
+                        font.pixelSize: 20
+                        color: (GlobalState.controlCenterOpen || ccMouse.containsMouse) ? Theme.primaryContainerFg : Theme.primary
                     }
 
-                    Text {
-                        id: clockText
-                        text: Qt.formatDateTime(clockTimer.currentTime, "hh:mm • ddd, MMM d")
-                        font.family: Theme.font
-                        font.pixelSize: 11
-                        font.weight: Font.Medium
-                        color: Theme.text
-                    }
-                }
-
-                Timer {
-                    id: clockTimer
-                    interval: 1000
-                    running: true
-                    repeat: true
-                    property var currentTime: new Date()
-                    onTriggered: currentTime = new Date()
-                }
-            }
-
-            // Control Center Trigger Pill
-            Rectangle {
-                id: ccTrigger
-                Layout.preferredWidth: 32
-                Layout.preferredHeight: 26
-                radius: Theme.radiusSm
-                color: (GlobalState.controlCenterOpen || ccMouse.containsMouse) ? Theme.primaryContainer : Theme.bgPill
-
-                Text {
-                    anchors.centerIn: parent
-                    text: "󰍜"
-                    font.family: Theme.monoFont
-                    font.pixelSize: 14
-                    color: (GlobalState.controlCenterOpen || ccMouse.containsMouse) ? Theme.primaryContainerFg : Theme.text
-                }
-
-                MouseArea {
-                    id: ccMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        GlobalState.controlCenterOpen = !GlobalState.controlCenterOpen
+                    MouseArea {
+                        id: ccMouse
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            GlobalState.controlCenterOpen = !GlobalState.controlCenterOpen
+                        }
                     }
                 }
             }
         }
     }
 }
-
