@@ -16,15 +16,17 @@ echo -e "${BLUE}Starting Dotfiles Installation...${RESET}"
 # Official Arch repo packages
 PKGS=(
     hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-kde-agent
-    waybar wlogout dunst hyprlock hypridle kitty dolphin fastfetch wl-clipboard cliphist
-    brightnessctl playerctl neovim zsh starship networkmanager bluez bluez-utils blueman
-    pipewire wireplumber pipewire-pulse pavucontrol ttf-jetbrains-mono-nerd ttf-lexend
+    quickshell hyprpicker hyprsunset hyprlock hypridle kitty dolphin fastfetch
+    wl-clipboard cliphist brightnessctl ddcutil playerctl cava jq imagemagick
+    neovim zsh starship networkmanager bluez bluez-utils pipewire wireplumber
+    pipewire-pulse pavucontrol blueman
+    ttf-jetbrains-mono-nerd ttf-material-symbols-variable noto-fonts
 )
 
 # AUR packages
 AUR_PKGS=(
-    rofi-wayland swww waypaper matugen-bin grimblast-git hyprpicker zen-browser-bin
-    spotify oh-my-posh-bin kanshi
+    rofi-wayland swww waypaper matugen-bin grimblast-git zen-browser-bin
+    spotify oh-my-posh-bin kanshi ttf-lexend
 )
 
 # ==============================================================================

@@ -13,18 +13,16 @@ hl.on("hyprland.start", function()
     -- Desktop Shell: Toggle between Quickshell and Waybar
     local USE_QUICKSHELL = true
     if USE_QUICKSHELL then
-        hl.exec_cmd("quickshell")
+        hl.exec_cmd("killall dunst waybar 2>/dev/null; quickshell")
+        hl.exec_cmd("sh -c 'sleep 0.5 && [ -s ~/.cache/current_wallpaper ] && swww img \"$(cat ~/.cache/current_wallpaper)\"'")
     else
         hl.exec_cmd(home .. "/.config/waybar/launch.sh")
+        hl.exec_cmd("hyprpaper")
+        hl.exec_cmd("blueman-applet")
     end
 
     hl.exec_cmd("hypridle")
 
     hl.exec_cmd("wl-paste --type text --watch cliphist store")
     hl.exec_cmd("wl-paste --type image --watch cliphist store")
-
-    hl.exec_cmd("hyprpaper")
-    hl.exec_cmd("bash " .. home .. "/dotfiles/hypr/scripts/restore-wallpaper.sh")
-
-    hl.exec_cmd("blueman-applet")
 end)

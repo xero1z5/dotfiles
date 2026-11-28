@@ -12,13 +12,15 @@ local mainMod = "SUPER"
 -- PROGRAMS
 -- -----------------------------------------------------
 
+local USE_QUICKSHELL = true
+
 local terminal    = "kitty"
 local fileManager = "dolphin"
 local browser     = "zen-browser"
-local wallpaper   = "waypaper"
-local menu        = home .. "/.config/rofi/launcher/launcher.sh"
-local clipboard   = home .. "/.config/rofi/clipboard/clipboard.sh"
-local logout      = home .. "/.config/wlogout/wlogout.sh"
+local wallpaper   = USE_QUICKSHELL and "qs ipc call wallpaperSelector toggle" or "waypaper"
+local menu        = USE_QUICKSHELL and "qs ipc call search toggle"          or (home .. "/.config/rofi/launcher/launcher.sh")
+local clipboard   = USE_QUICKSHELL and "qs ipc call search clipboardToggle" or (home .. "/.config/rofi/clipboard/clipboard.sh")
+local logout      = USE_QUICKSHELL and "qs ipc call session toggle"           or (home .. "/.config/wlogout/wlogout.sh")
 
 -- -----------------------------------------------------
 -- 1. APPLICATIONS
@@ -124,8 +126,8 @@ hl.bind("XF86AudioMute",        hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_S
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),   { repeating = true, locked = true })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"),                  { repeating = true, locked = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"),                  { repeating = true, locked = true })
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(USE_QUICKSHELL and "qs ipc call brightness increment" or "brightnessctl -e4 -n2 set 5%+"), { repeating = true, locked = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(USE_QUICKSHELL and "qs ipc call brightness decrement" or "brightnessctl -e4 -n2 set 5%-"), { repeating = true, locked = true })
 
 -- Media controls (requires playerctl)
 hl.bind("XF86AudioNext",  hl.dsp.exec_cmd("playerctl next"),       { locked = true })

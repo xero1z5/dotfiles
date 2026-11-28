@@ -10,10 +10,12 @@ This is a comprehensive list of dependencies required for a new Arch Linux insta
 
 ## 🎨 UI & Theming Components
 * `quickshell` - QtQuick/QML desktop shell framework (official extra repo)
+* `ttf-material-symbols-variable` - Material Symbols Rounded variable icons (official extra repo)
+* `hyprsunset` - Hyprland night light filter (official extra repo)
 * `waybar` - Highly customizable Wayland bar (legacy/fallback)
-* `rofi-wayland` - Application launcher, menus, and scripts UI
-* `wlogout` - Wayland-based logout menu
-* `dunst` - Notification daemon
+* `rofi-wayland` - Application launcher, menus, and scripts UI (legacy/fallback)
+* `wlogout` - Wayland-based logout menu (legacy/fallback)
+* `dunst` - Notification daemon (legacy/fallback)
 * `hyprlock` - Screen locker for Hyprland
 * `hypridle` - Idle management daemon
 * `matugen` - Material color extraction and theme generation
@@ -65,9 +67,9 @@ This is a comprehensive list of dependencies required for a new Arch Linux insta
 # Official Repositories
 sudo pacman -S hyprland xdg-desktop-portal-hyprland xdg-desktop-portal-gtk polkit-kde-agent \
 waybar wlogout dunst hyprlock hypridle kitty dolphin fastfetch wl-clipboard cliphist \
-brightnessctl playerctl neovim zsh starship networkmanager bluez bluez-utils blueman \
-pipewire wireplumber pipewire-pulse pavucontrol ttf-jetbrains-mono-nerd \
-ttf-lexend
+brightnessctl ddcutil playerctl cava jq imagemagick neovim zsh starship networkmanager \
+bluez bluez-utils blueman pipewire wireplumber pipewire-pulse pavucontrol \
+ttf-jetbrains-mono-nerd ttf-material-symbols-variable noto-fonts ttf-lexend
 
 # AUR Packages
 paru -S rofi-wayland swww waypaper matugen-bin grimblast-git hyprpicker \

@@ -31,5 +31,5 @@ input_path = '~/.config/matugen/templates/starship-colors.toml'
 output_path = '~/.config/starship/starship.toml'
 
 [templates.quickshell]
-input_path = '~/.config/matugen/templates/quickshell-colors.json'
-output_path = '~/.config/quickshell/theme/colors.json'
+input_path = '~/.config/matugen/templates/ii-colors.json'
+output_path = '~/.local/state/quickshell/user/generated/colors.json'
